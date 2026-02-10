@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-surface: #ffffff;
+
+    --bg-surface-2: hsl(206, 20%, 96%);
+    --bg-surface-3: hsl(206, 14%, 89%);
+
+    --gray-0: hsl(196, 14%, 98%);
+    --gray-1: hsl(195, 11, 93%);
+    --gray-2: hsl(198, 8%, 86%);
+    --gray-3: hsl(196, 7%, 73%);
+    --gray-4: hsl(198, 8%, 64%);
+    --gray-5: hsl(196, 8%, 56%);
+    --gray-6: hsl(198, 9%, 49%);
+    --gray-7: hsl(200, 10%, 43%);
+    --gray-8: hsl(202, 10%, 34%);
+    --gray-9: hsl(200, 10%, 27%);
+    --gray-10: hsl(196, 9%, 20%);
+    --gray-11: hsl(193, 10%, 13%);
+    --gray-12: hsl(187, 20%, 5%);
+
+    --toggle-start: hsl(198 90 46);
+    --toggle-pause: hsl(0 84 62);
+    --add: hsl(148 69 67);
+    --reset: hsl(210 12 97);
+}
+
+body {
+    min-block-size: 100dvh;
+    display: grid;
+    place-content: start center;
+    font-family: "Inter", sans-serif;
+    position: relative;
+}
+
+.app {
+    margin: 10vmin auto;
+    position: fixed;
+    inline-size: 360px;
+    max-block-size: 680px;
+    display: flex;
+    flex-flow: column;
+    background: linear-gradient(135deg,
+            var(--bg-surface-2) 19em,
+            var(--bg-surface) 0);
+    border: 1px solid var(--gray-2);
+    border-radius: 1.5em;
+    position: relative;
+    box-shadow: 0 30px 60px -20px hsl(210 20% 20% / 0.4),
+        0 0 0 1px hsl(210 15% 94%), inset 0 1px 0 0 hsl(210 15% 100% / 0.8);
+}
+
+header {
+    border-radius: 1.5em 1.5em 0 0;
+    display: grid;
+    height: 3.5rem;
+    flex-shrink: 0;
+    place-content: center;
+    border-bottom: 1px solid var(--gray-3);
+    background: var(--bg-surface);
+    box-shadow: 0 3px 5px var(--gray-2);
+}
