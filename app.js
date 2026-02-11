@@ -3,6 +3,8 @@ const stopwatch = () => {
   const resetBtn = document.querySelector(".reset-btn");
   const lapBtn = document.querySelector(".lap-btn");
   const lapsTitle = document.querySelector(".laps-title");
+  const display = document.querySelector(".display-deco");
+  const ringCycle = 60000;
 
   const [minutes, seconds, milliseconds] = [
     ".minutes",
@@ -39,10 +41,18 @@ const stopwatch = () => {
     milliseconds.textContent = t.milliseconds;
   };
 
+  const updateRing = () => {
+    const cycleTime = data.elapsedTime % ringCycle;
+    const progress = cycleTime / ringCycle;
+
+    display.style.setProperty("--progress", progress);
+  };
+
   const updateElapsedTime = () => {
     if (!isRunning) return;
     data.elapsedTime = performance.now() - startTime;
     updateTimeDisplay();
+    updateRing();
     rafId = requestAnimationFrame(updateElapsedTime);
   };
 
@@ -103,6 +113,7 @@ const stopwatch = () => {
     updateTimeDisplay();
     updateLapTime();
     updateButtonStates();
+    display.style.setProperty("--progress", 0);
   };
 
   toggleBtn.addEventListener("click", toggleStopwatch);

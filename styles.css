@@ -113,12 +113,25 @@ main {
     content: "";
     position: absolute;
     border-radius: inherit;
-    border: 0.25em solid;
 }
 
 .display-deco::after {
+    content: "";
+    position: absolute;
     inset: 0.375em;
-    border-color: transparent var(--gray-7) var(--gray-7) transparent;
+    border-radius: inherit;
+
+    --thickness: 0.25em;
+
+    background: conic-gradient(var(--gray-7) calc(var(--progress, 0) * 1turn),
+            transparent 0);
+
+    -webkit-mask: radial-gradient(farthest-side,
+            transparent calc(100% - var(--thickness)),
+            #000 0);
+    mask: radial-gradient(farthest-side,
+            transparent calc(100% - var(--thickness)),
+            #000 0);
 }
 
 .display-deco::before {
