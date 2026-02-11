@@ -182,7 +182,7 @@ main {
 }
 
 [type="button"]:not(:disabled) {
-    color: var(--gray-2);
+    color: var(--gray-12);
     background: linear-gradient(#fff6, #0000, #0002, #0004) var(--bg-color);
 }
 
@@ -207,11 +207,11 @@ main {
         0 -2px 1px 0 #0002;
 }
 
-.toggle-btn [aria-pressed="false"] {
+.toggle-btn[aria-pressed="false"] {
     --bg-color: var(--toggle-start);
 }
 
-.toggle-btn [aria-pressed="true"] {
+.toggle-btn[aria-pressed="true"] {
     --bg-color: var(--toggle-pause);
 }
 
@@ -307,12 +307,12 @@ main {
 
 @keyframes lapAmin {
     from {
+        transform: scale(0);
         opacity: 0;
-        transform: translateY(-1.5em) scale(0);
     }
 
     to {
+        transform: scale(1);
         opacity: 1;
-        transform: translateY(0) scale(1);
     }
 }

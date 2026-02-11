@@ -10,7 +10,7 @@ const stopwatch = () => {
     ".milliseconds",
   ].map((sel) => document.querySelector(sel));
 
-  const lapsList = document.querySelector("laps");
+  const lapsList = document.querySelector(".laps");
 
   let rafId = null;
   let startTime = 0;
@@ -28,7 +28,7 @@ const stopwatch = () => {
     return {
       minutes: pad(Math.floor(total / 60000)),
       seconds: pad(Math.floor((total % 60000) / 1000)),
-      milliseconds: pad(Maths.floor((total % 1000) / 10)),
+      milliseconds: pad(Math.floor((total % 1000) / 10)),
     };
   };
 
@@ -39,5 +39,79 @@ const stopwatch = () => {
     milliseconds.textContent = t.milliseconds;
   };
 
-  const updateElapsedTime = () => {};
+  const updateElapsedTime = () => {
+    if (!isRunning) return;
+    data.elapsedTime = performance.now() - startTime;
+    updateTimeDisplay();
+    rafId = requestAnimationFrame(updateElapsedTime);
+  };
+
+  const updateLapTime = () => {
+    const hasLaps = data.laps.length > 0;
+
+    lapsTitle.classList.toggle("is-muted", !hasLaps);
+
+    if (!hasLaps) {
+      lapsList.replaceChildren();
+      return;
+    }
+
+    const time = data.laps.at(-1);
+    const { minutes, seconds, milliseconds } = formatElapsedTime(time);
+
+    const li = document.createElement("li");
+    li.className = "lap-item is-new";
+    li.innerHTML = `
+    <span class="lap-label">Lap ${data.laps.length}</span>
+    <span class="lap-time">${minutes}:${seconds}.${milliseconds}</span>
+    `;
+    lapsList.append(li);
+  };
+
+  const updateButtonStates = () => {
+    toggleBtn.textContent = isRunning ? "Pause" : "Start";
+    toggleBtn.setAttribute("aria-pressed", String(isRunning));
+
+    lapBtn.disabled = !isRunning;
+    resetBtn.disabled = isRunning || data.elapsedTime === 0;
+  };
+
+  const toggleStopwatch = () => {
+    isRunning = !isRunning;
+
+    if (isRunning) {
+      startTime = performance.now() - data.elapsedTime;
+      rafId = requestAnimationFrame(updateElapsedTime);
+    } else {
+      cancelAnimationFrame(rafId);
+    }
+
+    updateButtonStates();
+  };
+
+  const addNewLap = () => {
+    if (!isRunning) return;
+    data.laps.push(data.elapsedTime);
+    updateLapTime();
+  };
+
+  const reset = () => {
+    if (isRunning) return;
+
+    data.elapsedTime = 0;
+    data.laps = [];
+    updateTimeDisplay();
+    updateLapTime();
+    updateButtonStates();
+  };
+
+  toggleBtn.addEventListener("click", toggleStopwatch);
+  lapBtn.addEventListener("click", addNewLap);
+  resetBtn.addEventListener("click", reset);
+
+  updateTimeDisplay();
+  updateLapTime();
+  updateButtonStates();
 };
+
+stopwatch();
